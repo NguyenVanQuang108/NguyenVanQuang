@@ -1,34 +1,26 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Student;
+use App\Models\Product;
 
 class HomeController 
 {
-    public function index() 
+    public function index()
     {
-        // 1. Chuẩn bị dữ liệu từ Model
-        $message = "Chào mừng bạn đến với mô hình MVC!";
-        $student = new Student();
-        $studentInfo = $student->getInfo();
+        $productModel = new Product();
+        $products = $productModel->all();
+        $totalProducts = count($products);
         
-        // 2. Gọi View và truyền dữ liệu
+        // Lấy 4 sản phẩm mới nhất
+        $latestProducts = array_slice($products, 0, 4);
+        
+        ob_start();
         include __DIR__ . '/../Views/home.php';
-    }
-    
-    public function about()
-    {
-        echo "<h1>Trang Giới thiệu</h1>";
-        echo "<p>Đây là trang giới thiệu về dự án MVC</p>";
-        echo '<a href="index.php?page=home">← Quay lại trang chủ</a>';
-    }
-    
-    public function contact()
-    {
-        echo "<h1>Trang Liên hệ</h1>";
-        echo "<p>Email: contact@example.com</p>";
-        echo "<p>Điện thoại: 0123 456 789</p>";
-        echo '<a href="index.php?page=home">← Quay lại trang chủ</a>';
+        $content = ob_get_clean();
+        
+        $page = 'home';
+        $title = 'Trang chủ - Lab5 MVC';
+        include __DIR__ . '/../Views/layout.php';
     }
 }
 ?>

@@ -1,14 +1,7 @@
 {
-    "name": "nguye/lab5_mvc",
-    
-    "authors": [
-        {
-            "name": "NguyenVanQuang108",
-            "email": "quang25112005gg@gmail.com"
-        }
-    ],
+    "name": "vendor/lab5_mvc",
     "require": {
-        "fakerphp/faker": "^1.24"
+        "fakerphp/faker": "^1.23"
     },
     "autoload": {
         "psr-4": {
@@ -16,4 +9,3 @@
         }
     }
 }
-    

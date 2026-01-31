@@ -4,15 +4,15 @@ namespace App\Models;
 class BaseModel 
 {
     protected $pdo;
+    protected $table;
     
-    public function __construct()
+    public function __construct($table = null)
     {
         try {
-            // Kết nối database
             $host = 'localhost';
-            $dbname = 'lab5_';
-            $username = 'root';  // Mặc định XAMPP
-            $password = '';      // Mặc định XAMPP không có password
+            $dbname = 'lab5_';  // Database của bạn
+            $username = 'root';
+            $password = '';
             
             $this->pdo = new \PDO(
                 "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
@@ -20,12 +20,23 @@ class BaseModel
                 $password
             );
             
-            // Thiết lập chế độ lỗi
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            
+            if ($table) {
+                $this->table = $table;
+            }
             
         } catch (\PDOException $e) {
             die("Lỗi kết nối database: " . $e->getMessage());
         }
+    }
+    
+    // Helper method để chạy query
+    protected function query($sql, $params = [])
+    {
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
     }
 }
 ?>
